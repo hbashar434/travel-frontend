@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, Text, ScrollView, Alert } from "react-native";
+import { router } from "expo-router";
 import { useProfile, useUpdateProfile } from "../../hooks/useUser";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { Card } from "../../components/Card";
@@ -8,6 +9,15 @@ import { Button } from "../../components/Button";
 import { useAuthStore } from "../../store/useStore";
 
 export default function ProfileScreen() {
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
+  if (authLoading) {
+    return <LoadingSpinner message="Checking authentication..." />;
+  }
+
+  if (!isAuthenticated) {
+    router.replace("/(auth)/login");
+    return null;
+  }
   const { data: profile, isLoading } = useProfile();
   const updateProfileMutation = useUpdateProfile();
   const [name, setName] = useState("");

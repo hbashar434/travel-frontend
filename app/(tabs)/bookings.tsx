@@ -10,9 +10,20 @@ import { useMyBookings } from "../../hooks/useBookings";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { Card } from "../../components/Card";
 import { Booking } from "../../types";
+import { useAuthStore } from "../../store/useStore";
 
 export default function BookingsScreen() {
   const { data: bookings, isLoading, refetch, isRefetching } = useMyBookings();
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
+
+  if (authLoading) {
+    return <LoadingSpinner message="Checking authentication..." />;
+  }
+
+  if (!isAuthenticated) {
+    router.replace("/(auth)/login");
+    return null;
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();

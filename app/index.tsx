@@ -16,9 +16,7 @@ export default function Index() {
     return <LoadingSpinner />;
   }
 
-  if (isAuthenticated) {
-    return <Redirect href="/(tabs)" />;
-  }
-
-  return <Redirect href="/(auth)/login" />;
+  // Always open the app into the main tabs. Individual screens will
+  // handle auth-guarding where necessary (e.g. bookings/profile).
+  return <Redirect href="/(tabs)" />;
 }
