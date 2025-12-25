@@ -24,8 +24,9 @@ export default function TabsLayout() {
         },
         tabBarItemStyle: {
           flex: 0,
+          justifyContent: "center",
           alignItems: "center",
-          paddingHorizontal: 12,
+          paddingHorizontal: 20,
         },
         tabBarLabelStyle: { textAlign: "center" },
         headerRight: () => {
