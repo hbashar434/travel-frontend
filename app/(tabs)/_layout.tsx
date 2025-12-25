@@ -17,6 +17,17 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: true,
         tabBarActiveTintColor: "#2563eb",
+        tabBarStyle: {
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarItemStyle: {
+          flex: 0,
+          alignItems: "center",
+          paddingHorizontal: 12,
+        },
+        tabBarLabelStyle: { textAlign: "center" },
         headerRight: () => {
           if (!isAuthenticated) return null;
           return (
