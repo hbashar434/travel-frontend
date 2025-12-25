@@ -36,5 +36,8 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },
+  "overrides": {
+    "react-native-worklets": "0.5.1"
+  },
   "private": true
 }
