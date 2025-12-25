@@ -32,6 +32,7 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     if (!validate()) return;
+    console.log("login input", email, password);
 
     try {
       await loginMutation.mutateAsync({ email, password });

@@ -49,7 +49,7 @@ export default function RegisterScreen() {
 
   const handleRegister = async () => {
     if (!validate()) return;
-
+    console.log("Register Input:", { name, email, password, confirmPassword });
     try {
       await registerMutation.mutateAsync({
         email,

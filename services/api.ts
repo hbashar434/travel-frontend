@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:3000";
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,29 +10,22 @@ export const api = axios.create({
   },
 });
 
-// Token storage keys
 const TOKEN_KEY = "auth_token";
 
-// Request interceptor for adding auth token
-api.interceptors.request.use(
-  async (config) => {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+// Add auth token to requests
+api.interceptors.request.use(async (config) => {
+  const token = await SecureStore.getItemAsync(TOKEN_KEY);
+  if (token && config) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+});
 
-// Response interceptor for error handling
+// Handle 401 errors and other response errors
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
       await SecureStore.deleteItemAsync(TOKEN_KEY);
     }
     return Promise.reject(error);
@@ -53,6 +46,7 @@ export const tokenService = {
 };
 
 // API endpoints
+console.log("API_BASE_URL (resolved):", API_BASE_URL); // Debugging line
 export const authApi = {
   register: (data: { email: string; password: string; name?: string }) =>
     api.post("/auth/register", data),
