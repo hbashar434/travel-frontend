@@ -45,8 +45,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 px-6 py-12">
+    <ScrollView
+      className="bg-white"
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+    >
+      <View className="px-6">
         <Text className="text-3xl font-bold text-gray-900 mb-2">
           Welcome Back
         </Text>
